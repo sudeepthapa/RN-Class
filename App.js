@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, ActivityIndicator, Image } from 'react-native';
 import { CustomButton, CustomButton2, CustomButton3, CustomButton4 } from './components/buttons';
 
 export default function App() {
@@ -27,6 +27,9 @@ export default function App() {
       <CustomButton3 color="blue" textColor="white" title="TouchableNativeFeedback" onButtonPlaceCustomEventHandler={clickHandler} />
       <Text>Custom Buttons</Text>
       <CustomButton4 color="pink" textColor="black" title="TouchableWithoutFeedback" onButtonPlaceCustomEventHandler={clickHandler} />
+      <ActivityIndicator color="red" size="large" />
+      <Image style={styles.image} source={{uri:"https://storage.pixteller.com/designs/designs-images/2016-11-19/02/thumbs/img_page_1_58305b35ebf5e.png"}}/>
+      <Image style={styles.image} source={require('./assets/favicon.png')}/>
     </View>
   );
 }
@@ -37,4 +40,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems:'center'
   },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius:50,
+    resizeMode:'cover'
+  }
 });
