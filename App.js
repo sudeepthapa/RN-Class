@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
   },
   modalBody: {
     padding:30,
-    backgroundColor:'red'
+    backgroundColor:'#fff'
   }
 });
