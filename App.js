@@ -1,43 +1,41 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, View } from 'react-native';
 import Header from './components/Header';
 import Todos from './components/Todos';
 import COLORS from './constants/COLOR';
-import {Ionicons, Entypo} from '@expo/vector-icons'
+import {Ionicons} from '@expo/vector-icons'
 import TodoForm from './components/TodoForm';
 
 export default function App() {
   const [isOpen, setIsOpen] = React.useState(false)
-  const [todos, addTodo] = React.useState([
-    {
-      id: 1,
-      title: 'Cook Food',
-      note: 'Cooking food is not easy.',
-      isComplete: false
-    },
-    {
-      id: 2,
-      title: 'Learn RN',
-      note: 'Learning is easy.',
-      isComplete: true
-    }
-  ])
+  const [todos, addTodo] = React.useState([])
 
-  const handleSubmit = () => {
-    addTodo([...todos, {
-      id: Math.random(),
-      title: 'Learn JAVA',
-      note: 'Learning is easy.',
-      isComplete: true
-    }])
+  const handleSubmit = (data) => {
+    addTodo([{...data, isComplete:false, id: Math.random().toString()}, ...todos])
     setIsOpen(false)
   }
+
+  const switchIsComplete = (todoId, value) => {
+    console.log(todoId, value);
+    const todosCopy = [...todos];
+    const updatedTodos = todosCopy.map(todo => {
+      if (todo.id == todoId) {
+        todo.isComplete = value;
+        return todo;
+      }
+      return todo;
+    })
+    addTodo(updatedTodos)
+  }
+
+  const completeTodos = todos.filter(todo=>todo.isComplete)
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      <Header noOfTodos = {todos.length} />
-      <Todos todos={todos} />
+      <Header noOfTodos = {todos.length} completed = {completeTodos.length} />
+      <Todos todos={todos} changeIsComplete = {switchIsComplete} />
       <View style={styles.floatingActionButton}>
         <Ionicons name="add" onPress={()=>setIsOpen(true)} color={COLORS.white} size={28}/>
       </View>

@@ -8,8 +8,9 @@ const Header = props => {
       <View style={styles.iconButton}>
         <Ionicons name="clipboard-outline" color={COLORS.primary} size={22} />
     </View>
-    <Text style={styles.heading}>All</Text>
-    <Text style={styles.text}>{props.noOfTodos} Tasks</Text>
+    <Text style={styles.heading}>All - { props.noOfTodos } Tasks</Text>
+    <Text style={styles.text}>{props.noOfTodos - props.completed} Remaining </Text>
+    <Text style={styles.text}>{ props.completed } Completed</Text>
   </View>
  }
 

@@ -2,14 +2,14 @@ import React from 'react'
 import { View, Text, StyleSheet, Switch } from 'react-native'
 import COLORS from '../constants/COLOR'
 
-const Todo = ({todo}) => {
+const Todo = ({todo, handleToggle}) => {
   return <View style={styles.todo}>
     <View>
-      <Text style={styles.title}>{todo.title}</Text>
-      <Text style={styles.date}>{ todo.note }</Text>
+      <Text style={{...styles.title, textDecorationLine: todo.isComplete ? 'line-through':'none'}}>{todo.title}</Text>
+      <Text style={{...styles.date, textDecorationLine: todo.isComplete ? 'line-through':'none'}}>{ todo.note }</Text>
     </View>
     <View>
-      <Switch value={todo.isComplete} />
+      <Switch value={todo.isComplete} onValueChange={ (value) => handleToggle(todo.id, value) }/>
     </View>
   </View>
 }

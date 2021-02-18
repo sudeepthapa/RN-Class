@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Switch, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import COLORS from '../constants/COLOR'
 import Todo from './Todo'
 
@@ -7,7 +7,7 @@ const TODOS = props => {
   return <View style={styles.todos}>
     <ScrollView showsVerticalScrollIndicator={false}>
       {
-        props.todos.map(todo=> <Todo key={todo.id} todo={todo} />)
+        props.todos.map(todo=> <Todo key={todo.id} todo={todo} handleToggle={props.changeIsComplete} />)
       }
       
     </ScrollView>

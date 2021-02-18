@@ -1,10 +1,18 @@
 import React from 'react'
-import { View, Text, StyleSheet, TextInput, Picker, Button } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Button, ScrollView } from 'react-native'
+import {Picker} from '@react-native-community/picker'
 import { Entypo } from '@expo/vector-icons'
 import COLORS from '../constants/COLOR'
+import { CATEGORIES } from '../constants/DATA'
 
 const TodoForm = props => {
-  return <View style={styles.form}>
+
+  const [title, setTitle] = React.useState('');
+  const [note, setNote] = React.useState('');
+  const [category, setCategory] = React.useState(null);
+
+  return <ScrollView>
+    <View style={styles.form}>
     <View style={styles.formHeader}>
       <View style={styles.textContainer}>
         <Text style={styles.text}> New Task</Text>
@@ -14,24 +22,32 @@ const TodoForm = props => {
     <View style={styles.formBody}>
       <View style={styles.formGroup}>
         <Text style={{ color: COLORS.textDark }}>What are you planning?</Text>
-        <TextInput multiline numberOfLines={5} style={styles.input} />
+        <TextInput multiline numberOfLines={5} style={styles.input} value={title} onChangeText={(text)=>setTitle(text)} />
       </View>
       <View style={styles.formGroup}>
         <Text style={{ color: COLORS.textDark }}>Add Note</Text>
-        <TextInput multiline numberOfLines={5} style={styles.input} />
+        <TextInput multiline numberOfLines={5} style={styles.input} value={note} onChangeText={(text)=>setNote(text)} />
       </View>
       <View style={styles.formGroup}>
         <Text style={{ color: COLORS.textDark }}>Category</Text>
         <Picker
-          style={{ height: 50, width: '100%', marginBottom:30, borderBottomColor: COLORS.textDark, borderBottomWidth:1 }}
+          style={{ height: 50, width: '100%', marginBottom: 30, borderBottomColor: COLORS.textDark, borderBottomWidth: 1 }}
+          onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
+            selectedValue={category}
+            mode="dropdown"
         >
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
+          <Picker.Item label="Select Category" color="#aaa" value={null} />
+          {
+            CATEGORIES.map(category => {
+              return <Picker.Item key={category.id} label={category.title} value={category.title} />
+            })
+          }
       </Picker>
       </View>
-      <Button title="Submit" onPress={()=>props.submit()}></Button>
+      <Button title="Submit" onPress={()=>props.submit({title, note, category})}></Button>
     </View>
   </View>
+  </ScrollView>
 }
 
 const styles = StyleSheet.create({
