@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import ProductsScreen from '../screens/ProductsScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
+import { Ionicons } from '@expo/vector-icons'
+import {Platform, Text, Button, View } from 'react-native';
 
 const HomeStack = createStackNavigator();
 
@@ -23,8 +25,16 @@ const MainNavigator = () => {
         }
       }}>
         <HomeStack.Screen name="Categories" component={CategoriesScreen} options={{title:'All Categories'}} />
-        <HomeStack.Screen name="Products" component={ProductsScreen} />
-        <HomeStack.Screen name="ProductDetail" component={ProductDetailScreen} />
+        <HomeStack.Screen name="Products" component={ProductsScreen} options={{
+          headerStyle: {
+            backgroundColor: 'orange'
+          },
+          headerRight: props => <View><Button title="Hello" /></View>
+        }} />
+        <HomeStack.Screen name="ProductDetail" component={ProductDetailScreen} options={{
+          title: "Details",
+          headerShown:false
+        }} />
       </HomeStack.Navigator>
     </NavigationContainer>
   )
