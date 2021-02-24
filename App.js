@@ -42,8 +42,9 @@ export default function App() {
   
   if (!isReady) {
     return <Spinner color='green' />
+  } else {    
+    return (
+      <MainNavigator />
+    );
   }
-  return (
-    <MainNavigator />
-  );
 }

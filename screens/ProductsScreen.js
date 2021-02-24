@@ -1,24 +1,48 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, Pressable } from 'react-native';
+import { PRODUCTS } from '../constants/data';
 
-const ProductsScreen = ({navigation}) => {
+const ProductsScreen = ( props) => {
+  const buildProductItem = ({item}) => {
+    return (
+      <Pressable  style={styles.product} onPress={()=>props.navigation.navigate('ProductDetail', {productId:item.id} )}>
+        <View>
+      <Text>{item.name}</Text>
+    </View>
+      </Pressable>
+    )
+  }
+
+  const products = PRODUCTS.filter(product => {
+    return product.category===props.route.params.catId
+  })
+
   return <View style={styles.screen}>
-    <Text style={styles.title}> PRODUCTS PAGE </Text>
-    <Button title="Go to Detail Page" onPress={()=>navigation.navigate('ProductDetail')} />
-    <Button title="Go to Products" onPress={()=>navigation.navigate('Products')} />
+    <FlatList
+      data={products}
+      renderItem={buildProductItem}
+      keyExtractor={(item)=>item.id}
+    />
   </View>
  }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent:'center',
     padding:20,
   },
   title: {
-    fontFamily: 'ubuntu-bold',
+    fontFamily: 'Inter_700Bold',
     fontSize:22
+  },
+  product: {
+    width: '100%',
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom:10
   }
 })
 

@@ -1,43 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Icon, Title, Content } from 'native-base';
+import { CATEGORIES, PRODUCTS } from '../constants/data';
 
 const ProductDetailScreen = props => {
-  return <View style={styles.screen}>
-    <Header>
-      <Left>
-        <Button transparent>
-          <Icon name='arrow-back' onPress={() => props.navigation.goBack()} />
-        </Button>
-      </Left>
-      <Body>
-        <Title>Details</Title>
-      </Body>
-      <Right>
-        <Button transparent>
-          <Icon name='search' />
-        </Button>
-        <Button transparent>
-          <Icon name='heart' />
-        </Button>
-        <Button transparent>
-          <Icon name='more' />
-        </Button>
-      </Right>
-    </Header>
-    <Text style={styles.title}> PRODUCT DETAIL PAGE </Text>
-    {/* <Button bordered onPress={() => props.navigation.goBack()}> <Text>GO BACK</Text> </Button> */}
 
+  const selectedProduct = PRODUCTS.find(product => product.id === props.route.params.productId)
+  const category = CATEGORIES.find(category=>category.id === selectedProduct.category)
+
+  return <View style={styles.screen}>
+    <Text style={styles.title}>Name:  {selectedProduct.name} </Text>
+    <Text style={styles.title}>Price: Rs {selectedProduct.price} </Text>
+    <Text style={styles.title}> Category: {category.name} </Text>
+    <Text style={styles.title}> Id: {selectedProduct.id} </Text>
   </View>
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    width: Dimensions.get('window').width
   },
   title: {
-    fontFamily: 'ubuntu-bold',
+    fontFamily: 'Inter_700Bold',
     fontSize: 22
   }
 })

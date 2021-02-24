@@ -1,27 +1,47 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, Pressable } from 'react-native';
+import { CATEGORIES } from '../constants/data';
 
 const CategoriesScreen = props => {
 
-  const navigateToProducts = () => {
-    props.navigation.navigate('Products')
+  const buildCategoriesItem = ({item}) => {
+    return (
+      <Pressable style={styles.category} onPress={()=>props.navigation.navigate('Products', { catId:item.id })}>
+        <View>  
+          <Text style={styles.title}>{ item.name }</Text>
+        </View>
+      </Pressable>
+    )
   }
 
-  return <View style={styles.screen}>
-    <Text style={styles.title}> HOME PAGE </Text>
-    <Button title="Go to products page" onPress={ navigateToProducts } />
-  </View>
+  return (
+    <View style={styles.screen}>
+      <FlatList
+        data={CATEGORIES}
+        renderItem={ buildCategoriesItem }
+        keyExtractor = {(item)=>item.id}
+        numColumns={2}
+      />
+    </View>
+  )
  }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent:'center',
     padding:20,
   },
+  category: {
+    width: '49%',
+    backgroundColor: '#ddd',
+    height:150,
+    marginRight: 10,
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent:'center'
+  },
   title: {
-    fontFamily: 'ubuntu-bold',
+    fontFamily: 'Inter_700Bold',
     fontSize:22
   }
 })

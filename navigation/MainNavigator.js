@@ -18,23 +18,15 @@ const MainNavigator = () => {
         },
         headerTintColor: "white",
         headerTitleStyle: {
-          fontFamily:'ubuntu-bold'
+          fontFamily:'Inter_700Bold'
         },
         headerBackTitleStyle: {
-          fontFamily:'ubuntu-bold'
+          fontFamily:'Inter_700Bold'
         }
       }}>
         <HomeStack.Screen name="Categories" component={CategoriesScreen} options={{title:'All Categories'}} />
-        <HomeStack.Screen name="Products" component={ProductsScreen} options={{
-          headerStyle: {
-            backgroundColor: 'orange'
-          },
-          headerRight: props => <View><Button title="Hello" /></View>
-        }} />
-        <HomeStack.Screen name="ProductDetail" component={ProductDetailScreen} options={{
-          title: "Details",
-          headerShown:false
-        }} />
+        <HomeStack.Screen name="Products" component={ProductsScreen}  options={{title:'Products'}}/>
+        <HomeStack.Screen name="ProductDetail" component={ProductDetailScreen} options={{title:'Details'}} />
       </HomeStack.Navigator>
     </NavigationContainer>
   )
