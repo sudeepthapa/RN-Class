@@ -21,7 +21,8 @@ const ProductsScreen = ( props) => {
     <FlatList
       data={products}
       renderItem={buildProductItem}
-      keyExtractor={(item)=>item.id}
+      keyExtractor={(item) => item.id}
+      ListEmptyComponent = {()=><Text>No Products Found !!</Text>}
     />
   </View>
  }
