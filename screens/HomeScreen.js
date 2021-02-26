@@ -13,12 +13,14 @@ const HomeScreen = props => {
 
   return <ScrollView style={styles.screen}>
     <View style={styles.screen}>
-    <FoodHeader />
-    <Title>Select a category</Title>
-    <Categories />
-    <Title>Popular</Title>
-    <Populars />
-  </View>
+      <FoodHeader />
+      <Title>Select a category</Title>
+      <Categories />
+      <Title>Popular</Title>
+      <Populars />
+      <Title>Popular</Title>
+      <Populars />
+    </View>
   </ScrollView>
  }
 
