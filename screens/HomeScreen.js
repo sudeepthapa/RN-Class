@@ -14,6 +14,7 @@ const HomeScreen = props => {
     <FoodHeader />
     <Title>Select a category</Title>
     <Categories />
+    <Title>Popular</Title>
   </View>
  }
 

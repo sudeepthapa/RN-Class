@@ -11,7 +11,7 @@ const FoodHeader = props => {
     </View>
     <View style={styles.searchBar}>
       <TextInput placeholder="Search products ..." style={{flex:1}} />
-      <MaterialIcons name="search" />
+      <MaterialIcons name="search" size={28} color="#888" />
     </View>
   </View>
  }
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontFamily:'ubuntu-bold',
   },
   image: {
     width: 40,
@@ -37,12 +37,13 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     width: '100%',
-    height: 40,
-    backgroundColor: '#ddd',
+    height: 45,
+    backgroundColor: '#eee',
     borderRadius: 5,
     marginTop: 25,
     justifyContent: 'center',
     paddingHorizontal: 15,
+    paddingVertical: 8,
     flexDirection: 'row',
     alignItems:'center'
   }

@@ -9,7 +9,7 @@ const Categories = props => {
       <View style={styles.imageContainer}>
         <Image source={{uri:item.image}} style={styles.image} />
       </View>
-      <Text>{item.title}</Text>
+      <Text style={{fontFamily:'ubuntu-bold', fontSize:13, color:'#444' }}>{item.title}</Text>
     </View>
   }
 
