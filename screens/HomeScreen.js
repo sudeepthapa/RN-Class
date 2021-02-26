@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import Categories from '../components/Categories'
 import FoodHeader from '../components/FoodHeader'
 import Populars from '../components/Populars'
@@ -11,13 +11,15 @@ const HomeScreen = props => {
     props.navigation.setOptions({headerShown:false})
   })
 
-  return <View style={styles.screen}>
+  return <ScrollView style={styles.screen}>
+    <View style={styles.screen}>
     <FoodHeader />
     <Title>Select a category</Title>
     <Categories />
     <Title>Popular</Title>
     <Populars />
   </View>
+  </ScrollView>
  }
 
 const styles = StyleSheet.create({
@@ -25,9 +27,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:'#fff'
   },
-  title: {
-    
-  }
 })
 
 export default HomeScreen;
