@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, StyleSheet, View } from 'react-native'
 
 const Title = props => {
-  return <View style={styles.titleContainer}>
+  return <View style={{...styles.titleContainer, ...props.containerStyle}}>
     <Text style={{ ...styles.title, ...props.style }}>
         {props.children}
     </Text>

@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import Categories from '../components/Categories'
 import FoodHeader from '../components/FoodHeader'
+import Populars from '../components/Populars'
 import Title from '../components/Title'
 
 const HomeScreen = props => {
@@ -15,6 +16,7 @@ const HomeScreen = props => {
     <Title>Select a category</Title>
     <Categories />
     <Title>Popular</Title>
+    <Populars />
   </View>
  }
 
