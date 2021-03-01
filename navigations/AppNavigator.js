@@ -1,24 +1,29 @@
 import React from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
 import HomeScreen from '../screens/HomeScreen';
 import DetailScreen from '../screens/DetailScreen';
 import COLORS from '../constants/colors';
 import {Ionicons} from '@expo/vector-icons'
-import Profile from '../screens/Profile';
 import BioScreen from '../screens/BioScreen';
 import PersonalScreen from '../screens/PersonalScreen';
+import AccountScreen from '../screens/AccountSetting';
+import SettingScreen from '../screens/SettingScreen';
 
 const FoodStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const ProfileTabs = createMaterialTopTabNavigator();
+const Drawer = createDrawerNavigator();
 
 const AppNavigator = () => {
   return <NavigationContainer>
-    <TabNavigator />
+    <DrawerNavigator />
   </NavigationContainer>
 }
 
@@ -30,8 +35,13 @@ const FoodStackNavigator = () => {
 }
 
 const ProfileStackNavigator = () => {
-  return <ProfileStack.Navigator screenOptions={{}} >
-    <ProfileStack.Screen name="Profile" component={ProfileTabsNavigator} />
+
+  return <ProfileStack.Navigator screenOptions={{
+    headerTitleAlign:'center'
+  }} >
+    <ProfileStack.Screen name="Profile" component={ProfileTabsNavigator} options={({ navigation, route }) => ({
+          headerLeft: props => <Ionicons name="menu" onPress={()=>navigation.openDrawer()} size={30} style={{paddingLeft:10}} />,
+        })} />
   </ProfileStack.Navigator>
 }
 
@@ -42,7 +52,7 @@ const TabNavigator = () => {
       tabBarOptions={{ 
       activeTintColor: COLORS.primary,
       showLabel:false
-      }}
+    }}
     >
       <Tab.Screen name="Home" component={FoodStackNavigator} options={{
         tabBarIcon: ({ focused, color, size }) => {
@@ -91,6 +101,15 @@ const ProfileTabsNavigator = () => {
     <ProfileTabs.Screen name="Personal" component={PersonalScreen} />
     <ProfileTabs.Screen name="Contacts" component={PersonalScreen} />
   </ProfileTabs.Navigator>
+}
+
+const DrawerNavigator = () => {  
+  return <Drawer.Navigator drawerType="slide" initialRouteName="Home">
+    <Drawer.Screen name="Home" component={TabNavigator} />
+    <Drawer.Screen name="Account" component={AccountScreen} />
+    <Drawer.Screen name="Settings" component={SettingScreen} />
+    <Drawer.Screen name="Profile" component={ProfileStackNavigator} />
+  </Drawer.Navigator>
 }
 
 
