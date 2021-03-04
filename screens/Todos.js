@@ -1,27 +1,10 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { List, Card } from 'react-native-paper';
+import { useSelector } from 'react-redux'
 
 const Todos = props => {
-  const [todos, setTodos] = React.useState([
-    {
-      id: 1,
-      title: 'Hello',
-    },
-    {
-      id: 2,
-      title: 'Hello1',
-    },
-    {
-      id: 3,
-      title: 'Hello2',
-    },
-    {
-      id: 4,
-      title: 'Hello3',
-    },
-  ])
-
+  const todos = useSelector(state=>state.todos.todos)
   return <View style={{ flex: 1}}>
     {todos.map(todo => {
       return <Card key={todo.id} style={{marginTop:10}}>
