@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-const HomeScreen = props => {
+const AllTodosScreen = props => {
   return <View style={{ flex:1, alignItems:'center', justifyContent:'center'}}>
-    <Text>HOMEPAGE</Text>
+    <Text>AllTodosScreen</Text>
   </View>
  }
 
 const styles = StyleSheet.create({})
 
-export default HomeScreen;
+export default AllTodosScreen;
