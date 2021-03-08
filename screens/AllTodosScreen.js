@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native';
-import { Appbar, Modal, TextInput, Checkbox, Button, List, Paragraph, Dialog, Portal, Text } from 'react-native-paper';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { Appbar, Modal, TextInput, Checkbox, Button, List, Paragraph, Dialog, Portal, Text, Searchbar } from 'react-native-paper';
 import { useTheme } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodos, markAsComplete } from '../store/actions/todos';
@@ -12,8 +12,11 @@ const AllTodosScreen = props => {
   const [description, setDescription] = React.useState('');
   const [selectedTodoId, setSelectedTodoId] = React.useState('');
   const [priority, setPriority] = React.useState(false);
+  const [searchValue, setSearchValue] = React.useState('')
 
   const [openDialog, setOpenDialog] = React.useState(false);
+
+  const [allTodos, setTodos] = React.useState([])
 
   const hideDialog = () => setOpenDialog(false);
 
@@ -37,7 +40,8 @@ const AllTodosScreen = props => {
       priority,
       isComplete: false,
     }
-    dispatch(addTodos(todo))
+    // dispatch(addTodos(todo))
+    setTodos([todo, ...allTodos])
     hideModal();
   }
 
@@ -47,13 +51,22 @@ const AllTodosScreen = props => {
   }
 
   const { colors } = useTheme();
-  return <View style={{ flex: 1 }}>
+
+  const filteredTodos =  allTodos.filter(todo=>todo.title.toLowerCase().includes(searchValue.toLowerCase() || ''))
+
+  return <View style={{ flex: 1,height:'100%' }}>
     <Appbar.Header style={{ backgroundColor: colors.primary }}>
-      <Appbar.Content titleStyle={{ color: '#fff' }} title="All Todos" />
+      <Searchbar
+        style={{width:"85%"}}
+        placeholder="Search"
+        onChangeText={(text)=>setSearchValue(text)}
+        value={searchValue}
+      />
       <Appbar.Action icon="plus" color="#fff" size={30} onPress={showModal} />
     </Appbar.Header>
+    <View style={{flex:1}}>
     {
-      todos.map(todo => {
+      filteredTodos.map(todo => {
         return <List.Item
           onPress={()=>handleListTap(todo.id)}
           key={todo.id}
@@ -64,6 +77,7 @@ const AllTodosScreen = props => {
       />
       })
     }
+    </View>
 
     <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{ padding: 20, margin: 20, backgroundColor: '#fff' }}>
       <TextInput
