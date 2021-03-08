@@ -1,20 +1,25 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native';
-import { Appbar, Modal, TextInput, Checkbox, Button, List } from 'react-native-paper';
+import { Appbar, Modal, TextInput, Checkbox, Button, List, Paragraph, Dialog, Portal, Text } from 'react-native-paper';
 import { useTheme } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodos } from '../store/actions/todos';
+import { addTodos, markAsComplete } from '../store/actions/todos';
 
 const AllTodosScreen = props => {
 
   const [visible, setVisible] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [selectedTodoId, setSelectedTodoId] = React.useState('');
   const [priority, setPriority] = React.useState(false);
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const hideDialog = () => setOpenDialog(false);
+
 
   const dispatch = useDispatch();
   const todos = useSelector(state => state.todosState.todos)
-  console.log("TODOS", todos)
   
   const showModal = () => setVisible(true);
   const hideModal = () => {
@@ -36,6 +41,11 @@ const AllTodosScreen = props => {
     hideModal();
   }
 
+  const handleListTap = (id) => {
+    setOpenDialog(true);
+    setSelectedTodoId(id)
+  }
+
   const { colors } = useTheme();
   return <View style={{ flex: 1 }}>
     <Appbar.Header style={{ backgroundColor: colors.primary }}>
@@ -45,6 +55,7 @@ const AllTodosScreen = props => {
     {
       todos.map(todo => {
         return <List.Item
+          onPress={()=>handleListTap(todo.id)}
           key={todo.id}
         title={todo.title}
         description={todo.description}
@@ -79,6 +90,18 @@ const AllTodosScreen = props => {
         </Button>
       </View>
     </Modal>
+    <Portal>
+      <Dialog visible={openDialog} onDismiss={hideDialog}>
+        <Dialog.Title>Do you want to mark this todo as complete?</Dialog.Title>
+        <Dialog.Actions>
+          <Button onPress={hideDialog}>Cancel</Button>
+          <Button onPress={() => {
+            dispatch(markAsComplete(selectedTodoId))
+            setOpenDialog(false)
+          }}>Yes</Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
   </View>
 }
 
