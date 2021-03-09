@@ -3,9 +3,10 @@ import { View, StyleSheet } from 'react-native';
 import { Appbar, Modal, TextInput, Checkbox, Button, List, Paragraph, Dialog, Portal, Text } from 'react-native-paper';
 import { useTheme } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodos, markAsComplete } from '../store/actions/todos';
+import { addTodosToFirebase, getAllTodos, markTodoAsComplete } from '../store/actions/todos';
 
 const AllTodosScreen = props => {
+  const { colors } = useTheme();
 
   const [visible, setVisible] = React.useState(false);
   const [title, setTitle] = React.useState('');
@@ -19,7 +20,6 @@ const AllTodosScreen = props => {
 
 
   const dispatch = useDispatch();
-  const todos = useSelector(state => state.todosState.todos)
   
   const showModal = () => setVisible(true);
   const hideModal = () => {
@@ -31,13 +31,12 @@ const AllTodosScreen = props => {
 
   const submitForm = () => {
     const todo = {
-      id: Math.random().toString(),
       title,
       description,
       priority,
       isComplete: false,
     }
-    dispatch(addTodos(todo))
+    dispatch(addTodosToFirebase(todo))
     hideModal();
   }
 
@@ -45,8 +44,12 @@ const AllTodosScreen = props => {
     setOpenDialog(true);
     setSelectedTodoId(id)
   }
+  const todos = useSelector(state => state.todosState.todos)
+ 
+  React.useEffect(() => {
+    dispatch(getAllTodos())
+  }, [])
 
-  const { colors } = useTheme();
   return <View style={{ flex: 1 }}>
     <Appbar.Header style={{ backgroundColor: colors.primary }}>
       <Appbar.Content titleStyle={{ color: '#fff' }} title="All Todos" />
@@ -96,7 +99,7 @@ const AllTodosScreen = props => {
         <Dialog.Actions>
           <Button onPress={hideDialog}>Cancel</Button>
           <Button onPress={() => {
-            dispatch(markAsComplete(selectedTodoId))
+            dispatch(markTodoAsComplete(selectedTodoId))
             setOpenDialog(false)
           }}>Yes</Button>
         </Dialog.Actions>
